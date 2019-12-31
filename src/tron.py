@@ -15,34 +15,37 @@ class Tron:
 
         self._reset_map()
 
-    def _get_player_count(self):
-        count = 0
+    def _get_winner (self):
+        alive = []
+        dead = []
         for player in self.players:
-            count += int(not player.is_dead)
-        return count
+            if player.is_dead:
+                dead.append(player)
+            else:
+                alive.append(player)
 
-    def _get_player(self, number):
-        for player in self.players:
-            if player.number == number:
-                return player
+        if len(alive) == 1:
+            return alive[0]
+        
+        return None
 
     def _check_in_bounds(self, row, col):
         return (0 <= row < Settings.MAP_DIMENSIONS) and (0 <= col < Settings.MAP_DIMENSIONS)
 
     def _update_map(self):
         
-        for player in self.players:
-            row, col = player.position 
+        for i in range(len(self.players)):
+            row, col = self.players[i].position 
 
             if not self._check_in_bounds(row, col):
-                player.set_dead()
+                self.players[i].set_dead()
                 continue
 
             if self.map[row][col] != 0:
-                player.set_dead()
+                self.players[i].set_dead()
                 continue
 
-            self.map[row][col] = player.number
+            self.map[row][col] = i + 1
 
     def _render_map(self):
 
@@ -52,7 +55,7 @@ class Tron:
             for col in range(len(self.map[row])):
                 number = self.map[row][col]
                 if number:
-                    color = self._get_player(number).color
+                    color = self.players[number - 1].color
                     pg.draw.rect(self.screen, color, (col * Settings.CELL_WIDTH, row * Settings.CELL_WIDTH, Settings.CELL_WIDTH, Settings.CELL_WIDTH))
 
     def _reset_map(self):
@@ -75,7 +78,8 @@ class Tron:
 
             while not game_over:
                 
-                game_over = (self._get_player_count() <= 1)
+                winner = self._get_winner() 
+                game_over = (winner is not None)
 
                 e = pg.event.poll()
                 if e.type == pg.QUIT: 
@@ -94,4 +98,7 @@ class Tron:
 
                 t.sleep(Settings.BUFFER_DELAY)
 
-            print("Crashed")
+            print("Game Over")
+            winner.add_point()
+            for i in range(len(self.players)):
+                print(f"Player {i + 1}: {self.players[i].score}")
