@@ -10,22 +10,14 @@ class KeyBoardPlayer(Player):
         Player.__init__(self, color, start_pos)
         self.control_scheme = control_scheme
 
-    def move(self, e, keys):
+    def move(self):
 
-        if e.type == pg.KEYDOWN:
-
-            if keys[self.control_scheme["UP"]]:
-                self.direction = (-1, 0)
-            elif keys[self.control_scheme["DOWN"]]:
-                self.direction = (1, 0)
-            elif keys[self.control_scheme["LEFT"]]:
-                self.direction = (0, -1)
-            elif keys[self.control_scheme["RIGHT"]]:
-                self.direction = (0, 1)
-
-    def update_position(self):
-
-        row, col = self.position
-        dr, dc = self.direction
-
-        self.position = (row + dr, col + dc)
+        keys = pg.key.get_pressed()
+        if keys[self.control_scheme["UP"]]:
+            self.direction = (-1, 0)
+        elif keys[self.control_scheme["DOWN"]]:
+            self.direction = (1, 0)
+        elif keys[self.control_scheme["LEFT"]]:
+            self.direction = (0, -1)
+        elif keys[self.control_scheme["RIGHT"]]:
+            self.direction = (0, 1)

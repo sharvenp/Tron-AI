@@ -1,5 +1,6 @@
 
 from settings import Settings
+from keyboard_player import KeyBoardPlayer
 
 import time as t
 import pygame as pg
@@ -25,7 +26,10 @@ class Tron:
                 alive.append(player)
 
         if len(alive) == 1:
-            return alive[0]
+            return alive
+
+        if len(alive) == 0:
+            return dead
         
         return None
 
@@ -66,6 +70,9 @@ class Tron:
                 a.append(0)
             self.map.append(a)
 
+    def _get_agent_input(self, number):
+        pass
+
     def run_game(self):
 
         while True:
@@ -85,11 +92,9 @@ class Tron:
                 if e.type == pg.QUIT: 
                     quit(0)
                 
-                keys = pg.key.get_pressed()
-
                 for player in self.players:
                     if not player.is_dead:
-                        player.move(e, keys)
+                        player.move()
                         player.update_position()
 
                 self._update_map()
@@ -99,6 +104,7 @@ class Tron:
                 t.sleep(Settings.BUFFER_DELAY)
 
             print("Game Over")
-            winner.add_point()
+            for player in winner:
+                player.add_point()
             for i in range(len(self.players)):
                 print(f"Player {i + 1}: {self.players[i].score}")

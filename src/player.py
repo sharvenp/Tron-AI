@@ -21,3 +21,10 @@ class Player:
     def set_dead(self):
         self.is_dead = True
         self.direction = (0, 0)
+
+    def update_position(self):
+
+        row, col = self.position
+        dr, dc = self.direction
+
+        self.position = (row + dr, col + dc)
