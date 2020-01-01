@@ -1,6 +1,7 @@
 
 from settings import Settings
 from keyboard_player import KeyBoardPlayer
+from agent_player import AgentPlayer
 
 import time as t
 import pygame as pg
@@ -76,10 +77,11 @@ class Tron:
     def run_game(self):
 
         while True:
+            
+            self._reset_map()
 
             for player in self.players:
                 player.reset()
-                self._reset_map()
             
             game_over = False
 
@@ -94,7 +96,21 @@ class Tron:
                 
                 for player in self.players:
                     if not player.is_dead:
-                        player.move()
+                        if type(player) == KeyBoardPlayer:
+                        
+                            player.move()
+                        
+                        elif type(player) == AgentPlayer:
+                        
+                            other_player = None
+                        
+                            for p in self.players:
+                                if p != player:
+                                    other_player = p
+                                    break
+                        
+                            player.move(self.map, other_player.position)
+                        
                         player.update_position()
 
                 self._update_map()
