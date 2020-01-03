@@ -1,9 +1,10 @@
 
 class Player:
 
-    def __init__(self, color, start_pos):
+    def __init__(self, color, start_pos, start_direction):
         self.color = color
         self.start_pos = start_pos
+        self.start_direction = start_direction
         self.score = 0
         self.reset()
 
@@ -15,7 +16,7 @@ class Player:
 
     def reset(self):
         self.position = self.start_pos
-        self.direction = (1, 0)
+        self.direction = self.start_direction
         self.is_dead = False
         self.is_killed = False
 

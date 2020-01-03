@@ -7,8 +7,8 @@ import math as m
 
 class AgentPlayer(Player, Agent):
 
-    def __init__(self, color, start_pos, architecture, lr, gamma, saving_interval, load_most_recent, model_directory):
-        Player.__init__(self, color, start_pos)
+    def __init__(self, color, start_pos, start_direction, architecture, lr, gamma, saving_interval, load_most_recent, model_directory):
+        Player.__init__(self, color, start_pos, start_direction)
         Agent.__init__(self, architecture, lr, gamma, saving_interval, load_most_recent, model_directory)
 
         self.reset_training_data()

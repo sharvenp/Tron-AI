@@ -6,8 +6,8 @@ import pygame as pg
 
 class KeyBoardPlayer(Player):
 
-    def __init__(self, color, start_pos, control_scheme):
-        Player.__init__(self, color, start_pos)
+    def __init__(self, color, start_pos, start_direction, control_scheme):
+        Player.__init__(self, color, start_pos, start_direction)
         self.control_scheme = control_scheme
 
     def move(self):
