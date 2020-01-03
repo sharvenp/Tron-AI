@@ -13,3 +13,8 @@ class Settings:
 
     # Colors
     BACKGROUND_COLOR = (0, 0, 0)
+
+    # Rewards [For Agents]
+    REWARD_ALIVE = 10
+    REWARD_DEAD = -100
+    REWARD_KILL = 100

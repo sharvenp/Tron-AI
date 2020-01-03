@@ -67,7 +67,7 @@ class Agent:
                 
                 self.current_episode = m
                 fn = prefix+str(m)+suffix
-                self._load_model('models/'+fn)
+                self._load_model(self.model_directory+"/"+fn)
             else:
                 print(colored('FATAL: MODELS DIRECTORY EMPTY', 'red')) 
                 quit(0)
@@ -126,13 +126,12 @@ class Agent:
             # Theres a bug where len(r) > len(s) so quick kludge around it
             while len(r) > len(s): 
                 r.pop()    
-            directory = 'models/'
             states = np.asarray(s)
             actions = np.asarray(a)
             rewards = np.asarray(r)
             self._train(states, actions, rewards)
             if game % self.SAVE_INTERVAL == 0 and game and save:
-                self._save_model(directory+"chkpnt-"+str(game)+".h5")
+                self._save_model(self.model_directory+"/"+"chkpnt-"+str(game)+".h5")
 
     def _compute_discounted_rewards (self, R):
 

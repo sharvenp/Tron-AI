@@ -11,6 +11,16 @@ class AgentPlayer(Player, Agent):
         Player.__init__(self, color, start_pos)
         Agent.__init__(self, architecture, lr, gamma, saving_interval, load_most_recent, model_directory)
 
+        self.reset_training_data()
+
+    def reset_training_data(self):        
+        self.states = []
+        self.actions = []
+        self.rewards = []
+
+    def train_wrapper(self, episode):
+        self.train_episode(self.states, self.actions, self.rewards, episode)
+
     def move(self, game_map, other_player_position):
         x = self._get_input_vector(game_map, other_player_position)
         action = self.get_state_action(x)
@@ -24,7 +34,13 @@ class AgentPlayer(Player, Agent):
         elif action == 3:
             self.direction = (0, 1)
 
+        self.states.append(x)
+        self.actions.append(action)
+
         return action
+
+    def add_reward(self, reward):
+        self.rewards.append(reward)
 
     def _cast_ray(self, direction, game_map):
         dr, dc = direction
