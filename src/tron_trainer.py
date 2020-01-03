@@ -43,6 +43,8 @@ class Tron_Trainer:
 
             if self.map[row][col] != 0:
                 self.players[i].set_dead()
+                if self.map[row][col] != i + 1:
+                    self.players[i].set_killed()
                 continue
 
             self.map[row][col] = i + 1
@@ -112,10 +114,16 @@ class Tron_Trainer:
 
                 if game_over:
                     if len(winner) == 1 and winner[0] == self.p1:
-                        self.p1.add_reward(Settings.REWARD_KILL)
+                        if self.p2.is_killed:
+                            self.p1.add_reward(Settings.REWARD_KILL)
+                        else:
+                            self.p1.add_reward(Settings.REWARD_ALIVE_BONUS)
                         self.p2.add_reward(Settings.REWARD_DEAD)
                     elif len(winner) == 1 and winner[0] == self.p2:
-                        self.p2.add_reward(Settings.REWARD_KILL)
+                        if self.p1.is_killed:
+                            self.p2.add_reward(Settings.REWARD_KILL)
+                        else:
+                            self.p2.add_reward(Settings.REWARD_ALIVE_BONUS)
                         self.p1.add_reward(Settings.REWARD_DEAD)   
                     elif len(winner) == 2:
                         self.p1.add_reward(Settings.REWARD_DEAD)   
@@ -135,6 +143,6 @@ class Tron_Trainer:
                 if self.players[i] in winner:
                     self.players[i].add_point()
 
-                output_string = "Player {}- Episode: {:0>5} Score: {:0>3} Reward: {:0>7} T+: {}".format(i+1, episode, self.players[i].score, sum(self.players[i].rewards), time_str)
+                output_string = "Player {}- Episode: {:0>7} Score: {:0>3} Reward: {:0>6} T+: {}".format(i+1, episode, self.players[i].score, sum(self.players[i].rewards), time_str)
                 self.players[i].train_wrapper(episode)
                 print(output_string)

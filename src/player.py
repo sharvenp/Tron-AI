@@ -17,9 +17,14 @@ class Player:
         self.position = self.start_pos
         self.direction = (1, 0)
         self.is_dead = False
+        self.is_killed = False
 
     def set_dead(self):
         self.is_dead = True
+        self.direction = (0, 0)
+
+    def set_killed(self):
+        self.is_killed = True
         self.direction = (0, 0)
 
     def update_position(self):

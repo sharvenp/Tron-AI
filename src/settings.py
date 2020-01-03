@@ -16,5 +16,6 @@ class Settings:
 
     # Rewards [For Agents]
     REWARD_ALIVE = 10
-    REWARD_DEAD = -100
-    REWARD_KILL = 100
+    REWARD_DEAD = -200
+    REWARD_ALIVE_BONUS = 200
+    REWARD_KILL = 500
