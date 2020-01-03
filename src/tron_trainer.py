@@ -143,6 +143,8 @@ class Tron_Trainer:
                 if self.players[i] in winner:
                     self.players[i].add_point()
 
-                output_string = "Player {}- Episode: {:0>7} Score: {:0>3} Reward: {:0>6} T+: {}".format(i+1, episode, self.players[i].score, sum(self.players[i].rewards), time_str)
                 self.players[i].train_wrapper(episode)
-                print(output_string)
+                
+                if episode % Settings.PRINT_INTERVAL == 0:
+                    output_string = "Player {}- Episode: {:0>7} Score: {:0>3} Reward: {:0>6} T+: {}".format(i+1, episode, self.players[i].score, sum(self.players[i].rewards), time_str)
+                    print(output_string)

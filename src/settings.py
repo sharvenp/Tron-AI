@@ -14,8 +14,11 @@ class Settings:
     # Colors
     BACKGROUND_COLOR = (0, 0, 0)
 
-    # Rewards [For Agents]
-    REWARD_ALIVE = 10
+    # Rewards For Agents
+    REWARD_ALIVE = 6
     REWARD_DEAD = -200
     REWARD_ALIVE_BONUS = 200
     REWARD_KILL = 500
+
+    # Misc
+    PRINT_INTERVAL = 100
